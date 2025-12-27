@@ -13,7 +13,7 @@
         logo: 'full',            // static | animated | full
         logoAnim: 'tilt',         // shake | rotate | tilt | all
         elementAnim: 'neon',      // neon | color | explosion | fly | all
-        speed: 1                 // 0.5 (slow) - 3 (fast)
+        speed: 0.5                 // 0.5 (slow) - 3 (fast)
     };
 
     // ===== URL Parameter Parsing =====
