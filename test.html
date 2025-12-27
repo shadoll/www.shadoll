@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadoll - Test Page</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1e1e1e;
+            color: #fff;
+        }
+        h1 { color: #667eea; }
+        .test-link {
+            display: block;
+            padding: 10px;
+            margin: 10px 0;
+            background: #2d2d2d;
+            color: #4facfe;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .test-link:hover {
+            background: #3d3d3d;
+        }
+        .category {
+            margin-top: 30px;
+            border-top: 1px solid #444;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎨 Shadoll Animation Test Suite</h1>
+    <p>Click any link below to test different animation configurations:</p>
+    
+    <div class="category">
+        <h2>Background Tests</h2>
+        <a href="index.html?bg=static&logo=static" class="test-link">Static Everything</a>
+        <a href="index.html?bg=animated&gradient=linear" class="test-link">Linear Gradient (Animated)</a>
+        <a href="index.html?bg=animated&gradient=radial" class="test-link">Radial Gradient (Animated)</a>
+        <a href="index.html?bg=animated&gradient=conic" class="test-link">Conic Gradient (Animated)</a>
+    </div>
+
+    <div class="category">
+        <h2>Logo Full-Body Animations</h2>
+        <a href="index.html?logo=full&logoAnim=shake" class="test-link">Shake Animation</a>
+        <a href="index.html?logo=full&logoAnim=rotate" class="test-link">Rotate Animation</a>
+        <a href="index.html?logo=full&logoAnim=tilt" class="test-link">Tilt Animation</a>
+        <a href="index.html?logo=full&logoAnim=all" class="test-link">All Logo Animations</a>
+    </div>
+
+    <div class="category">
+        <h2>Element Animations</h2>
+        <a href="index.html?logo=animated&elementAnim=neon" class="test-link">Neon Blinking</a>
+        <a href="index.html?logo=animated&elementAnim=color" class="test-link">Color Changing</a>
+        <a href="index.html?logo=animated&elementAnim=explosion" class="test-link">Explosion Effect</a>
+        <a href="index.html?logo=animated&elementAnim=fly" class="test-link">Fly Out Effect</a>
+        <a href="index.html?logo=animated&elementAnim=all" class="test-link">All Element Animations</a>
+    </div>
+
+    <div class="category">
+        <h2>Combined Tests</h2>
+        <a href="index.html?bg=animated&gradient=linear&logo=full&logoAnim=all&elementAnim=all" class="test-link">🔥 FULL CHAOS MODE</a>
+        <a href="index.html?bg=animated&gradient=radial&logo=full&logoAnim=rotate&elementAnim=neon" class="test-link">Radial + Rotate + Neon</a>
+        <a href="index.html?bg=animated&gradient=conic&logo=full&logoAnim=tilt&elementAnim=color" class="test-link">Conic + Tilt + Color</a>
+        <a href="index.html?bg=static&gradient=linear&logo=full&logoAnim=shake&elementAnim=explosion" class="test-link">Static BG + Shake + Explosion</a>
+    </div>
+
+    <div class="category">
+        <h2>Speed Tests</h2>
+        <a href="index.html?speed=0.25" class="test-link">🐌 Ultra Slow (0.25x)</a>
+        <a href="index.html?speed=0.5" class="test-link">Slow Motion (0.5x)</a>
+        <a href="index.html?speed=1" class="test-link">Normal Speed (1x)</a>
+        <a href="index.html?speed=2" class="test-link">Double Speed (2x)</a>
+        <a href="index.html?speed=3" class="test-link">⚡ Triple Speed (3x)</a>
+        <a href="index.html?speed=0.25&logoAnim=all&elementAnim=all" class="test-link">Ultra Slow Chaos Mode</a>
+    </div>
+
+    <div class="category">
+        <h2>Minimal Tests</h2>
+        <a href="index.html?bg=static&logo=static" class="test-link">Completely Static</a>
+        <a href="index.html?bg=animated&logo=static" class="test-link">Only Background Animated</a>
+        <a href="index.html?bg=static&logo=animated&elementAnim=neon" class="test-link">Only Logo Elements Animated</a>
+    </div>
+
+    <div class="category">
+        <h2>Default</h2>
+        <a href="index.html" class="test-link">Default Configuration</a>
+    </div>
+
+    <p style="margin-top: 40px; color: #888; font-size: 12px;">
+        💡 Tip: Press 'H' or '?' on any page to see keyboard controls<br>
+        💡 Use +/- keys to adjust speed in real-time<br>
+        📚 See <a href="USAGE.md" style="color: #4facfe;">USAGE.md</a> for more information
+    </p>
+</body>
+</html>
