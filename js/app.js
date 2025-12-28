@@ -11,7 +11,7 @@
         bg: 'animated',           // static | animated
         gradient: 'linear',       // linear | radial | conic
         logo: 'full',            // static | animated | full
-        logoAnim: 'tilt',         // shake | rotate | tilt | all
+        logoAnim: 'mixed',        // shake | rotate | tilt | interactive | mixed | all
         elementAnim: 'neon',      // neon | color | explosion | fly | all
         speed: 0.5                 // 0.5 (slow) - 3 (fast)
     };
@@ -95,6 +95,23 @@
                 hideHelp();
             }
         });
+
+        // Make kbd elements clickable for touch devices
+        const kbdElements = document.querySelectorAll('.help-item kbd[data-key]');
+        kbdElements.forEach(kbd => {
+            kbd.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const key = kbd.getAttribute('data-key');
+                // Simulate keyboard event
+                const event = new KeyboardEvent('keydown', {
+                    key: key,
+                    code: key,
+                    bubbles: true,
+                    cancelable: true
+                });
+                document.dispatchEvent(event);
+            });
+        });
     }
 
     // ===== Background Configuration =====
@@ -113,12 +130,170 @@
         }
     }
 
+    // ===== Interactive Tilt Controller =====
+    function createInteractiveTiltController(logoElement, mixedMode = false) {
+        let isActive = false;
+        let mode = 'cursor'; // 'cursor' or 'gyro'
+        let lastGyroTime = 0;
+        let lastCursorTime = 0;
+        let idleTimeout = null;
+        const SWITCH_TIMEOUT = 1000; // ms - time before switching modes
+        const IDLE_TIMEOUT = 2000; // ms - time with no movement before returning to tilt animation
+
+        // Tilt ranges
+        const MAX_TILT_X = 20; // degrees
+        const MAX_TILT_Y = 20; // degrees
+
+        function setInteractiveMode(active) {
+            if (mixedMode) {
+                if (active) {
+                    // Switch to interactive control
+                    logoElement.classList.remove('logo--tilt');
+                    logoElement.classList.add('logo--interactive');
+                } else {
+                    // Return to tilt animation
+                    logoElement.classList.remove('logo--interactive');
+                    logoElement.classList.add('logo--tilt');
+                    logoElement.style.transform = '';
+                }
+            }
+        }
+
+        function resetIdleTimer() {
+            if (!mixedMode) return;
+
+            if (idleTimeout) {
+                clearTimeout(idleTimeout);
+            }
+
+            // Switch to interactive mode
+            setInteractiveMode(true);
+
+            // Set timer to return to tilt animation after idle period
+            idleTimeout = setTimeout(() => {
+                setInteractiveMode(false);
+            }, IDLE_TIMEOUT);
+        }
+
+        function handleMouseMove(e) {
+            if (!isActive) return;
+
+            lastCursorTime = Date.now();
+
+            // Reset idle timer in mixed mode
+            resetIdleTimer();
+
+            // Auto-switch to cursor mode if gyro was active
+            if (mode === 'gyro' && (lastCursorTime - lastGyroTime) > SWITCH_TIMEOUT) {
+                mode = 'cursor';
+            }
+
+            if (mode === 'cursor') {
+                // Calculate cursor position (-1 to 1)
+                const x = (e.clientX / window.innerWidth) * 2 - 1;
+                const y = (e.clientY / window.innerHeight) * 2 - 1;
+
+                // Apply tilt based on cursor position
+                const rotateY = x * MAX_TILT_Y;
+                const rotateX = -y * MAX_TILT_X;
+
+                logoElement.style.transform = `perspective(400px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+            }
+        }
+
+        function handleDeviceOrientation(e) {
+            if (!isActive) return;
+
+            // Check if we have valid gyroscope data
+            if (e.beta === null || e.gamma === null) return;
+
+            lastGyroTime = Date.now();
+
+            // Reset idle timer in mixed mode
+            resetIdleTimer();
+
+            // Auto-switch to gyro mode if cursor was active
+            if (mode === 'cursor' && (lastGyroTime - lastCursorTime) > SWITCH_TIMEOUT) {
+                mode = 'gyro';
+            }
+
+            if (mode === 'gyro') {
+                // beta: front-to-back tilt (-180 to 180)
+                // gamma: left-to-right tilt (-90 to 90)
+
+                // Normalize and clamp values
+                let rotateX = Math.max(-MAX_TILT_X, Math.min(MAX_TILT_X, e.beta / 4));
+                let rotateY = Math.max(-MAX_TILT_Y, Math.min(MAX_TILT_Y, e.gamma / 3));
+
+                logoElement.style.transform = `perspective(400px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+            }
+        }
+
+        function requestPermission() {
+            // Request permission for iOS 13+ devices
+            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                DeviceOrientationEvent.requestPermission()
+                    .then(permissionState => {
+                        if (permissionState === 'granted') {
+                            window.addEventListener('deviceorientation', handleDeviceOrientation);
+                        }
+                    })
+                    .catch(console.error);
+            } else {
+                // Non-iOS or older browsers
+                window.addEventListener('deviceorientation', handleDeviceOrientation);
+            }
+        }
+
+        return {
+            start() {
+                if (isActive) return;
+                isActive = true;
+                mode = 'cursor';
+                lastCursorTime = Date.now();
+
+                // In mixed mode, start with tilt animation
+                if (mixedMode) {
+                    setInteractiveMode(false);
+                }
+
+                // Add cursor listener
+                document.addEventListener('mousemove', handleMouseMove);
+
+                // Try to add gyroscope listener
+                requestPermission();
+            },
+            stop() {
+                if (!isActive) return;
+                isActive = false;
+
+                // Clear idle timer
+                if (idleTimeout) {
+                    clearTimeout(idleTimeout);
+                    idleTimeout = null;
+                }
+
+                // Remove listeners
+                document.removeEventListener('mousemove', handleMouseMove);
+                window.removeEventListener('deviceorientation', handleDeviceOrientation);
+
+                // Reset transform
+                logoElement.style.transform = '';
+            }
+        };
+    }
+
     // ===== Logo Full-Body Animation Configuration =====
     function configureLogoAnimation(config) {
         const { logo, logoAnim } = config;
 
         // Remove all logo animation classes
-        elements.logo.classList.remove('logo--shake', 'logo--rotate', 'logo--tilt', 'logo--all');
+        elements.logo.classList.remove('logo--shake', 'logo--rotate', 'logo--tilt', 'logo--interactive', 'logo--all');
+
+        // Stop interactive mode if active
+        if (window.interactiveTiltController) {
+            window.interactiveTiltController.stop();
+        }
 
         // Apply logo animation if not static
         if (logo !== 'static') {
@@ -130,6 +305,20 @@
                 elements.logo.classList.add('logo--rotate');
             } else if (logoAnim === 'tilt') {
                 elements.logo.classList.add('logo--tilt');
+            } else if (logoAnim === 'interactive') {
+                elements.logo.classList.add('logo--interactive');
+                // Start interactive tilt mode (pure interactive, no mixed mode)
+                if (!window.interactiveTiltController) {
+                    window.interactiveTiltController = createInteractiveTiltController(elements.logo, false);
+                }
+                window.interactiveTiltController.start();
+            } else if (logoAnim === 'mixed') {
+                // Mixed mode: starts with tilt animation, switches to interactive on movement
+                elements.logo.classList.add('logo--tilt');
+                if (!window.interactiveTiltController) {
+                    window.interactiveTiltController = createInteractiveTiltController(elements.logo, true);
+                }
+                window.interactiveTiltController.start();
             }
         }
     }
@@ -277,7 +466,7 @@
                     break;
                 case 'a':
                     // Cycle logo body animations
-                    const logoAnims = ['shake', 'rotate', 'tilt', 'all'];
+                    const logoAnims = ['shake', 'rotate', 'tilt', 'interactive', 'mixed', 'all'];
                     const animIndex = logoAnims.indexOf(currentConfig.logoAnim);
                     currentConfig.logoAnim = logoAnims[(animIndex + 1) % logoAnims.length];
                     break;

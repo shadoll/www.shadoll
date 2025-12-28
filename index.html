@@ -12,7 +12,6 @@
     <div class="background" id="background"></div>
     <div class="logo-container">
         <svg xmlns="http://www.w3.org/2000/svg" id="logo" class="logo" viewBox="-745 -745 2000 2000">
-            <!-- Logo centered at origin (0,0) in a 2000x2000 viewBox that extends from -745 to 1255 in both directions -->
             <g id="shadoll_l" class="logo-element logo-element-l" fill="#222">
                 <path d="m286.7 401.2 61.9 60.2v-389.4l-62.4-60.6z" stroke="none" stroke-width="2" stroke-miterlimit="10"/>
             </g>
@@ -37,28 +36,28 @@
         <div class="help-content">
             <div class="help-section">
                 <h3>Background</h3>
-                <div class="help-item"><kbd>B</kbd> Toggle background animation (static ↔ animated)</div>
-                <div class="help-item"><kbd>G</kbd> Cycle gradient types (linear → radial → conic)</div>
+                <div class="help-item"><kbd data-key="b">B</kbd> Toggle background animation (static ↔ animated)</div>
+                <div class="help-item"><kbd data-key="g">G</kbd> Cycle gradient types (linear → radial → conic)</div>
             </div>
 
             <div class="help-section">
                 <h3>Logo Animations</h3>
-                <div class="help-item"><kbd>L</kbd> Cycle logo states (static → animated → full)</div>
-                <div class="help-item"><kbd>A</kbd> Cycle logo body animations (shake → rotate → tilt → all)</div>
-                <div class="help-item"><kbd>E</kbd> Cycle element animations (neon → color → explosion → fly → all)</div>
+                <div class="help-item"><kbd data-key="l">L</kbd> Cycle logo states (static → animated → full)</div>
+                <div class="help-item"><kbd data-key="a">A</kbd> Cycle logo body animations (shake → rotate → tilt → interactive → mixed → all)</div>
+                <div class="help-item"><kbd data-key="e">E</kbd> Cycle element animations (neon → color → explosion → fly → all)</div>
             </div>
 
             <div class="help-section">
                 <h3>Animation Speed</h3>
-                <div class="help-item"><kbd>+</kbd> Increase speed (+0.25x)</div>
-                <div class="help-item"><kbd>-</kbd> Decrease speed (-0.25x)</div>
-                <div class="help-item"><kbd>0</kbd> Reset speed to 1x</div>
+                <div class="help-item"><kbd data-key="+">+</kbd> Increase speed (+0.25x)</div>
+                <div class="help-item"><kbd data-key="-">-</kbd> Decrease speed (-0.25x)</div>
+                <div class="help-item"><kbd data-key="0">0</kbd> Reset speed to 1x</div>
             </div>
 
             <div class="help-section">
                 <h3>Other</h3>
-                <div class="help-item"><kbd>R</kbd> Reset all to defaults</div>
-                <div class="help-item"><kbd>H</kbd> or <kbd>?</kbd> Toggle this help</div>
+                <div class="help-item"><kbd data-key="r">R</kbd> Reset all to defaults</div>
+                <div class="help-item"><kbd data-key="h">H</kbd> or  <kbd data-key="?">?</kbd> Toggle this help</div>
             </div>
 
             <div class="help-section help-section-url">
@@ -68,7 +67,7 @@
                     <div><strong>bg:</strong> static | animated</div>
                     <div><strong>gradient:</strong> linear | radial | conic</div>
                     <div><strong>logo:</strong> static | animated | full</div>
-                    <div><strong>logoAnim:</strong> shake | rotate | tilt | all</div>
+                    <div><strong>logoAnim:</strong> shake | rotate | tilt | interactive | mixed | all</div>
                     <div><strong>elementAnim:</strong> neon | color | explosion | fly | all</div>
                     <div><strong>speed:</strong> 0.1 to 5 (default: 1)</div>
                 </div>
