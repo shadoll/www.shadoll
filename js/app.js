@@ -562,6 +562,14 @@
         return hasAnimationSupport;
     }
 
+    // ===== ViewBox Setup =====
+    function setupViewBox() {
+        const logo = elements.logo;
+        // Use same viewBox for all devices - logo at ~60% of screen
+        // Logo paths are ~510 units, so 900×900 viewBox makes logo 510/900 ≈ 57% of screen
+        logo.setAttribute('viewBox', '-200 -200 900 900');
+    }
+
     // ===== Initialization =====
     function init() {
         console.log('Shadoll Animated Placeholder - Initializing...');
@@ -572,6 +580,9 @@
         if (!isSupported) {
             console.warn('Some features may not work correctly');
         }
+
+        // Setup viewBox (same for all devices - mobile-first approach)
+        setupViewBox();
 
         // Get configuration from URL
         const config = getURLParams();

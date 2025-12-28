@@ -718,8 +718,8 @@ html, body {
 /* ===== Responsive Design ===== */
 @media (max-width: 768px) {
     .logo {
-        width: 80vmin;
-        height: 80vmin;
+        width: 100vmin;
+        height: 100vmin;
     }
 
     .toast {
@@ -727,14 +727,6 @@ html, body {
         padding: 12px 20px;
         font-size: 13px;
         max-width: 80%;
-    }
-
-    .help-button {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-        top: 15px;
-        right: 15px;
     }
 
     .help-window {
@@ -761,14 +753,7 @@ html, body {
     }
 
     .help-button {
-        bottom: 15px;
-        right: 15px;
         font-size: 20px;
-        width: 40px;
-        height: 40px;
-    }
-
-    .help-button:hover {
         width: 40px;
         height: 40px;
     }
@@ -776,8 +761,8 @@ html, body {
 
 @media (max-width: 480px) {
     .logo {
-        width: 90vmin;
-        height: 90vmin;
+        width: 100vmin;
+        height: 100vmin;
     }
 
     .toast {
@@ -788,11 +773,9 @@ html, body {
     }
 
     .help-button {
+        font-size: 18px;
         width: 36px;
         height: 36px;
-        font-size: 18px;
-        top: 12px;
-        right: 12px;
     }
 
     .help-window {
@@ -834,19 +817,6 @@ html, body {
 
     .footer p {
         font-size: 11px;
-    }
-
-    .help-button {
-        bottom: 12px;
-        right: 12px;
-        font-size: 18px;
-        width: 36px;
-        height: 36px;
-    }
-
-    .help-button:hover {
-        width: 36px;
-        height: 36px;
     }
 }
 
