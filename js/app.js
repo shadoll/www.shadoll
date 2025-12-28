@@ -57,9 +57,9 @@
             clearTimeout(toastTimeout);
         }
 
-        // Set toast content
+        // Set toast content (support HTML for highlighting)
         elements.toastTitle.textContent = title;
-        elements.toastMessage.textContent = message;
+        elements.toastMessage.innerHTML = message;
 
         // Show toast
         elements.toast.classList.add('show');
@@ -403,7 +403,7 @@
     }
 
     // ===== Apply All Configurations =====
-    function applyConfiguration(config, showNotification = false) {
+    function applyConfiguration(config, showNotification = false, changedKey = null) {
         console.log('Applying configuration:', config);
 
         configureBackground(config);
@@ -415,13 +415,6 @@
         if (showNotification) {
             const messages = [];
 
-            if (config.bg === 'static') {
-                messages.push(`Background: Static ${config.gradient}`);
-            } else {
-                messages.push(`Background: Animated ${config.gradient}`);
-            }
-
-            // Add palette info
             const paletteNames = {
                 'default': 'Default',
                 'blue-yellow': 'Blue-Yellow',
@@ -430,17 +423,30 @@
                 'fire': 'Fire',
                 'nature': 'Nature'
             };
-            messages.push(`Palette: ${paletteNames[config.palette] || config.palette}`);
 
+            // Background
+            const bgText = config.bg === 'static' ? `Static ${config.gradient}` : `Animated ${config.gradient}`;
+            const shouldHighlightBg = changedKey === 'bg' || changedKey === 'gradient';
+            messages.push(shouldHighlightBg ? `<strong>Background: ${bgText}</strong>` : `Background: ${bgText}`);
+
+            // Palette
+            const paletteText = paletteNames[config.palette] || config.palette;
+            messages.push(changedKey === 'palette' ? `<strong>Palette: ${paletteText}</strong>` : `Palette: ${paletteText}`);
+
+            // Logo
+            let logoText;
             if (config.logo === 'static') {
-                messages.push('Logo: Static');
+                logoText = 'Static';
             } else if (config.logo === 'animated') {
-                messages.push(`Logo: Elements (${config.elementAnim})`);
+                logoText = `Elements (${config.elementAnim})`;
             } else {
-                messages.push(`Logo: Full (${config.logoAnim} + ${config.elementAnim})`);
+                logoText = `Full (${config.logoAnim} + ${config.elementAnim})`;
             }
+            const shouldHighlightLogo = changedKey === 'logo' || changedKey === 'logoAnim' || changedKey === 'elementAnim';
+            messages.push(shouldHighlightLogo ? `<strong>Logo: ${logoText}</strong>` : `Logo: ${logoText}`);
 
-            messages.push(`Speed: ${config.speed}x`);
+            // Speed
+            messages.push(changedKey === 'speed' ? `<strong>Speed: ${config.speed}x</strong>` : `Speed: ${config.speed}x`);
 
             showToast('Configuration Updated', messages.join(' • '));
         }
@@ -463,58 +469,70 @@
         let currentConfig = getURLParams();
 
         document.addEventListener('keydown', (e) => {
+            let changedKey = null;
+
             switch(e.key.toLowerCase()) {
                 case 'b':
                     // Toggle background animation
                     currentConfig.bg = currentConfig.bg === 'animated' ? 'static' : 'animated';
+                    changedKey = 'bg';
                     break;
                 case 'g':
                     // Cycle gradient types
                     const gradients = ['linear', 'radial', 'conic'];
                     const currentIndex = gradients.indexOf(currentConfig.gradient);
                     currentConfig.gradient = gradients[(currentIndex + 1) % gradients.length];
+                    changedKey = 'gradient';
                     break;
                 case 'p':
                     // Cycle color palettes
                     const palettes = ['default', 'blue-yellow', 'dark', 'light', 'fire', 'nature'];
                     const paletteIndex = palettes.indexOf(currentConfig.palette);
                     currentConfig.palette = palettes[(paletteIndex + 1) % palettes.length];
+                    changedKey = 'palette';
                     break;
                 case 'l':
                     // Cycle logo animations
                     const logoStates = ['static', 'animated', 'full'];
                     const logoIndex = logoStates.indexOf(currentConfig.logo);
                     currentConfig.logo = logoStates[(logoIndex + 1) % logoStates.length];
+                    changedKey = 'logo';
                     break;
                 case 'a':
                     // Cycle logo body animations
                     const logoAnims = ['shake', 'rotate', 'tilt', 'interactive', 'mixed', 'all'];
                     const animIndex = logoAnims.indexOf(currentConfig.logoAnim);
                     currentConfig.logoAnim = logoAnims[(animIndex + 1) % logoAnims.length];
+                    changedKey = 'logoAnim';
                     break;
                 case 'e':
                     // Cycle element animations
                     const elemAnims = ['neon', 'color', 'explosion', 'fly', 'all'];
                     const elemIndex = elemAnims.indexOf(currentConfig.elementAnim);
                     currentConfig.elementAnim = elemAnims[(elemIndex + 1) % elemAnims.length];
+                    changedKey = 'elementAnim';
                     break;
                 case '+':
                 case '=':
                     // Increase speed
                     currentConfig.speed = Math.min(5, currentConfig.speed + 0.25);
+                    changedKey = 'speed';
                     break;
                 case '-':
                 case '_':
                     // Decrease speed
                     currentConfig.speed = Math.max(0.1, currentConfig.speed - 0.25);
+                    changedKey = 'speed';
                     break;
                 case '0':
                     // Reset speed to 1x
                     currentConfig.speed = 1;
+                    changedKey = 'speed';
                     break;
                 case 'r':
                     // Reset to defaults
                     currentConfig = { ...DEFAULT_CONFIG };
+                    changedKey = 'reset';
                     break;
                 case 'h':
                 case '?':
@@ -526,7 +544,7 @@
                     return;
             }
 
-            applyConfiguration(currentConfig, true); // Show toast notification
+            applyConfiguration(currentConfig, true, changedKey); // Show toast notification with highlight
             updateURL(currentConfig);
         });
     }

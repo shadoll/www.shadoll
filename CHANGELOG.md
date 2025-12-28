@@ -2,7 +2,7 @@
 
 All notable changes to the Shadoll Animated Placeholder project will be documented in this file.
 
-## [2.0.0] - 2025-12-28
+## [1.2.0] - 2025-12-28
 
 ### Major New Features
 
@@ -63,14 +63,24 @@ All notable changes to the Shadoll Animated Placeholder project will be document
 - **Help System Improvements**:
   - Multiple help toggles: `H`, `?`, `/` keys
   - `ESC` key closes help window
-  - Toast notifications moved to top
+  - Toast notifications moved to top with higher z-index (1002)
+  - Toast always appears above help window on mobile
   - Help button always at bottom-right corner
   - Removed duplicate/conflicting media query styles
+
+- **Toast Notification Highlighting**:
+  - Changed settings are highlighted in bold in toast messages
+  - Provides clear visual feedback on what was modified
+  - Uses HTML formatting for emphasis
 
 - **Footer**: Added copyright notice at bottom center
   - Semi-transparent white text
   - Subtle shadow for visibility
   - Responsive sizing
+
+- **Logo Documentation**: Added description of logo design
+  - Logo represents "s" and "d" from "shadoll" word
+  - Documented in README.md and CLAUDE.md
 
 ### Changed
 
@@ -89,10 +99,12 @@ All notable changes to the Shadoll Animated Placeholder project will be document
 
 ### Files Modified
 - [index.html](index.html) - Added palette param, footer, data-key attributes
-- [css/styles.css](css/styles.css) - 6 palettes, liquid glass styles, mobile fixes
-- [js/app.js](js/app.js) - Interactive controller, viewBox setup, palette cycling
-- [README.md](README.md) - Updated features and examples
+- [css/styles.css](css/styles.css) - 6 palettes, liquid glass styles, mobile fixes, toast z-index
+- [js/app.js](js/app.js) - Interactive controller, viewBox setup, palette cycling, toast highlighting
+- [README.md](README.md) - Updated features, examples, and logo description
 - [TODO.md](TODO.md) - Marked completed tasks
+- [USAGE.md](USAGE.md) - Updated with all new features and examples
+- [CLAUDE.md](CLAUDE.md) - Added logo design documentation and architectural decisions
 - [CHANGELOG.md](CHANGELOG.md) - This file
 
 ---
