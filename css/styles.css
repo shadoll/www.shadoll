@@ -1,6 +1,6 @@
 /* ===== CSS Custom Properties ===== */
 :root {
-    /* Gradient colors */
+    /* Default palette - Purple/Pink/Blue */
     --gradient-color-1: #667eea;
     --gradient-color-2: #764ba2;
     --gradient-color-3: #f093fb;
@@ -15,6 +15,56 @@
     --neon-duration: calc(2s / var(--speed-multiplier));
     --color-change-duration: calc(5s / var(--speed-multiplier));
     --explosion-duration: calc(3s / var(--speed-multiplier));
+}
+
+/* ===== Color Palettes ===== */
+
+/* Default: Purple/Pink/Blue */
+.palette--default {
+    --gradient-color-1: #667eea;
+    --gradient-color-2: #764ba2;
+    --gradient-color-3: #f093fb;
+    --gradient-color-4: #4facfe;
+}
+
+/* Blue/Yellow - Ocean Sunset */
+.palette--blue-yellow {
+    --gradient-color-1: #1e3c72;
+    --gradient-color-2: #2a5298;
+    --gradient-color-3: #f4d03f;
+    --gradient-color-4: #16a085;
+}
+
+/* Dark - Deep Space */
+.palette--dark {
+    --gradient-color-1: #0f2027;
+    --gradient-color-2: #203a43;
+    --gradient-color-3: #2c5364;
+    --gradient-color-4: #0a0e27;
+}
+
+/* Light - Pastel Dream */
+.palette--light {
+    --gradient-color-1: #ffecd2;
+    --gradient-color-2: #fcb69f;
+    --gradient-color-3: #ff9a9e;
+    --gradient-color-4: #fad0c4;
+}
+
+/* Fire - Red/Orange/Yellow */
+.palette--fire {
+    --gradient-color-1: #ff0844;
+    --gradient-color-2: #ffb199;
+    --gradient-color-3: #ff6a00;
+    --gradient-color-4: #ee0979;
+}
+
+/* Nature - Green/Teal */
+.palette--nature {
+    --gradient-color-1: #11998e;
+    --gradient-color-2: #38ef7d;
+    --gradient-color-3: #20E2D7;
+    --gradient-color-4: #29ffc6;
 }
 
 /* ===== Reset & Base Styles ===== */
@@ -668,8 +718,8 @@ html, body {
 /* ===== Responsive Design ===== */
 @media (max-width: 768px) {
     .logo {
-        width: 60vmin;
-        height: 60vmin;
+        width: 80vmin;
+        height: 80vmin;
     }
 
     .toast {
@@ -726,8 +776,8 @@ html, body {
 
 @media (max-width: 480px) {
     .logo {
-        width: 70vmin;
-        height: 70vmin;
+        width: 90vmin;
+        height: 90vmin;
     }
 
     .toast {

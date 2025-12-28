@@ -10,6 +10,7 @@
     const DEFAULT_CONFIG = {
         bg: 'animated',           // static | animated
         gradient: 'linear',       // linear | radial | conic
+        palette: 'default',       // default | blue-yellow | dark | light | fire | nature
         logo: 'full',            // static | animated | full
         logoAnim: 'mixed',        // shake | rotate | tilt | interactive | mixed | all
         elementAnim: 'neon',      // neon | color | explosion | fly | all
@@ -23,6 +24,7 @@
         return {
             bg: params.get('bg') || DEFAULT_CONFIG.bg,
             gradient: params.get('gradient') || DEFAULT_CONFIG.gradient,
+            palette: params.get('palette') || DEFAULT_CONFIG.palette,
             logo: params.get('logo') || DEFAULT_CONFIG.logo,
             logoAnim: params.get('logoAnim') || DEFAULT_CONFIG.logoAnim,
             elementAnim: params.get('elementAnim') || DEFAULT_CONFIG.elementAnim,
@@ -116,10 +118,13 @@
 
     // ===== Background Configuration =====
     function configureBackground(config) {
-        const { bg, gradient } = config;
+        const { bg, gradient, palette } = config;
 
         // Remove all background classes
         elements.background.className = 'background';
+
+        // Apply color palette
+        elements.background.classList.add(`palette--${palette}`);
 
         // Apply gradient type
         elements.background.classList.add(`background--${gradient}`);
@@ -416,6 +421,17 @@
                 messages.push(`Background: Animated ${config.gradient}`);
             }
 
+            // Add palette info
+            const paletteNames = {
+                'default': 'Default',
+                'blue-yellow': 'Blue-Yellow',
+                'dark': 'Dark',
+                'light': 'Light',
+                'fire': 'Fire',
+                'nature': 'Nature'
+            };
+            messages.push(`Palette: ${paletteNames[config.palette] || config.palette}`);
+
             if (config.logo === 'static') {
                 messages.push('Logo: Static');
             } else if (config.logo === 'animated') {
@@ -457,6 +473,12 @@
                     const gradients = ['linear', 'radial', 'conic'];
                     const currentIndex = gradients.indexOf(currentConfig.gradient);
                     currentConfig.gradient = gradients[(currentIndex + 1) % gradients.length];
+                    break;
+                case 'p':
+                    // Cycle color palettes
+                    const palettes = ['default', 'blue-yellow', 'dark', 'light', 'fire', 'nature'];
+                    const paletteIndex = palettes.indexOf(currentConfig.palette);
+                    currentConfig.palette = palettes[(paletteIndex + 1) % palettes.length];
                     break;
                 case 'l':
                     // Cycle logo animations
