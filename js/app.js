@@ -145,9 +145,9 @@
         const SWITCH_TIMEOUT = 1000; // ms - time before switching modes
         const IDLE_TIMEOUT = 2000; // ms - time with no movement before returning to tilt animation
 
-        // Tilt ranges
-        const MAX_TILT_X = 20; // degrees
-        const MAX_TILT_Y = 20; // degrees
+        // Tilt ranges - increased for better visibility on mobile
+        const MAX_TILT_X = 35; // degrees (increased from 20)
+        const MAX_TILT_Y = 35; // degrees (increased from 20)
 
         function setInteractiveMode(active) {
             if (mixedMode) {
