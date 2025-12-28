@@ -587,6 +587,25 @@ html, body {
     margin-right: 8px;
 }
 
+/* ===== Footer ===== */
+.footer {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 998;
+    pointer-events: none;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    color: rgba(255, 255, 255, 0.5);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    font-weight: 400;
+}
+
 /* ===== Responsive Design ===== */
 @media (max-width: 768px) {
     .logo {
@@ -626,6 +645,10 @@ html, body {
 
     .help-content {
         padding: 16px 20px;
+    }
+
+    .footer p {
+        font-size: 12px;
     }
 }
 
@@ -681,6 +704,14 @@ html, body {
     .help-code {
         font-size: 11px;
         padding: 10px;
+    }
+
+    .footer {
+        bottom: 12px;
+    }
+
+    .footer p {
+        font-size: 11px;
     }
 }
 
