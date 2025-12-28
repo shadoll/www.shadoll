@@ -226,9 +226,9 @@
                 // beta: front-to-back tilt (-180 to 180)
                 // gamma: left-to-right tilt (-90 to 90)
 
-                // Normalize and clamp values
-                let rotateX = Math.max(-MAX_TILT_X, Math.min(MAX_TILT_X, e.beta / 4));
-                let rotateY = Math.max(-MAX_TILT_Y, Math.min(MAX_TILT_Y, e.gamma / 3));
+                // Normalize and clamp values - increased sensitivity for better visibility
+                let rotateX = Math.max(-MAX_TILT_X, Math.min(MAX_TILT_X, e.beta / 2.5)); // increased from /4
+                let rotateY = Math.max(-MAX_TILT_Y, Math.min(MAX_TILT_Y, e.gamma / 1.5)); // increased from /3
 
                 logoElement.style.transform = `perspective(400px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
             }
